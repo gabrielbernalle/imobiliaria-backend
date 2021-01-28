@@ -1,4 +1,4 @@
-export interface PropertyInterface {
+export interface PropertieInterface {
     id?: string;
     adress: {
         logradouro: string;

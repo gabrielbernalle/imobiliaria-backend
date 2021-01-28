@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import * as controller from '../Entities/person/controller';
-import * as validators from '../Entities/person/validator.ts';
+import * as validators from '../Entities/person/validator';
 import { getValidData } from '../utils/validator';
 import { getByIdValidator } from '../utils/validator/common';
 

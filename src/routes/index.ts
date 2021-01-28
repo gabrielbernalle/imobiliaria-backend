@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { swaggerSpec } from '../swagger';
 import personRoutes from './person';
-import Properties from './properties';
+import propertieRoutes from './propertie';
 
 const router = Router();
 
@@ -15,6 +15,6 @@ router.get('/api-docs', (req: Request, res: Response) => {
     res.send(swaggerSpec);
 });
 
-router.use('/api/properties', Properties);
+router.use('/api/propertie', propertieRoutes);
 
 export default router;

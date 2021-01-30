@@ -5,22 +5,10 @@ export interface PersonInterface {
     password?: string;
 }
 
-export interface QueryUserInterface {
-    id?: string;
-    email?: string;
-    name?: string;
-}
+export type QueryUserInterface = Partial<Omit<PersonInterface, 'password'>>;
 
-export interface CreateUserInterface {
-    name: string;
-    email: string;
-    password?: string;
-}
+export type CreateUserInterface = Omit<PersonInterface, 'id'>;
 
-export interface UpdateUserInterface {
-    email?: string;
-    name?: string;
-    password?: string;
-}
+export type UpdateUserInterface = Partial<CreateUserInterface>;
 
 export type UserReturnColumns = 'name' | 'email' | 'id';

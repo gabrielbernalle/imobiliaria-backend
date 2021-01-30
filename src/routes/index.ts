@@ -15,6 +15,6 @@ router.get('/api-docs', (req: Request, res: Response) => {
     res.send(swaggerSpec);
 });
 
-router.use('/api/propertie', propertieRoutes);
+router.use('/api/properties', propertieRoutes);
 
 export default router;

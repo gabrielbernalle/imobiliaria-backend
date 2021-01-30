@@ -1,17 +1,47 @@
-import { getRepository } from 'typeorm';
+import { createQueryBuilder, getRepository } from 'typeorm';
 import { Person } from '../../../database/entities/Person';
-import { PersonInterface, QueryUserInterface } from '../interfaces';
+import {
+    CreateUserInterface,
+    PersonInterface,
+    QueryUserInterface,
+    UpdateUserInterface,
+    UserReturnColumns,
+} from '../interfaces';
 
 export const create = async (
-    personObject: PersonInterface,
+    personObject: CreateUserInterface,
+    returning: '*' | UserReturnColumns[] = '*',
 ): Promise<PersonInterface> => {
     const personEntity = Object.assign(new Person(), personObject);
 
-    return getRepository(Person).save(personEntity);
+    const { raw } = await createQueryBuilder(Person)
+        .insert()
+        .values(personEntity)
+        .returning(returning)
+        .execute();
+
+    return raw[0];
 };
 
 export const getOne = async (
     query: QueryUserInterface,
+    returning?: UserReturnColumns[],
 ): Promise<Person | undefined> => {
-    return getRepository(Person).findOne(query);
+    return getRepository(Person).findOne(query, {
+        select: returning,
+    });
+};
+
+export const update = async (
+    id: string,
+    updates: UpdateUserInterface,
+    returning: '*' | UserReturnColumns[] = ['name', 'email', 'id'],
+): Promise<Person | undefined> => {
+    const updateRes = await createQueryBuilder()
+        .update(Person, Object.assign(new Person(), updates))
+        .where({ id })
+        .returning(returning)
+        .execute();
+
+    return updateRes.raw;
 };

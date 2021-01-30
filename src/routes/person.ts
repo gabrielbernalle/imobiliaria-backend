@@ -37,4 +37,16 @@ router.get('/', validators.queryValidator, async (req: Request, res: Response) =
     return res.status(200).send(findedPerson);
 });
 
+router.put(
+    '/:id',
+    validators.updateValidator,
+    async (req: Request, res: Response) => {
+        const { params, body } = getValidData(req);
+
+        const updatedPerson = await controller.update(params.id, body);
+
+        return res.status(200).send(updatedPerson);
+    },
+);
+
 export default router;

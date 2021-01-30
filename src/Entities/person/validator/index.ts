@@ -1,4 +1,4 @@
-import { body, oneOf, query } from 'express-validator';
+import { body, oneOf, param, query } from 'express-validator';
 
 export const createValidator = [
     body('name').isString(),
@@ -17,4 +17,11 @@ export const queryValidator = [
         query('id').isUUID(),
         query('email').isEmail(),
     ]),
+];
+
+export const updateValidator = [
+    body('name').optional().isString(),
+    body('id').optional().isUUID(),
+    body('email').optional().isEmail(),
+    param('id').isUUID(),
 ];

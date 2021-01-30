@@ -1,9 +1,12 @@
 import { Person } from '../../../database/entities/Person';
 import { HttpError } from '../../../utils/errors/HttpError';
-import { PersonInterface, QueryUserInterface } from '../interfaces';
+import {
+    PersonInterface,
+    QueryUserInterface,
+    UpdateUserInterface,
+} from '../interfaces';
 
 import * as repository from '../repository';
-import { removeSecretProperties } from '../utils';
 import { authenticate } from '../utils/auth';
 
 export const auth = async (
@@ -19,9 +22,7 @@ export const create = async (
     personBody: PersonInterface,
 ): Promise<PersonInterface> => {
     try {
-        const user = await repository.create(personBody);
-
-        return removeSecretProperties(user);
+        return await repository.create(personBody, ['email', 'name', 'id']);
     } catch {
         throw new HttpError(400, 'Já existe usuário com este email');
     }
@@ -29,8 +30,19 @@ export const create = async (
 
 export const getOne = async (
     query: QueryUserInterface,
-): Promise<Person | undefined> => {
-    const res = await repository.getOne(query);
+): Promise<PersonInterface | undefined> => {
+    const res = await repository.getOne(query, ['email', 'name']);
+
+    if (!res) throw new HttpError(404, 'Person Not Found!');
+
+    return res;
+};
+
+export const update = async (
+    id: string,
+    updates: UpdateUserInterface,
+): Promise<PersonInterface | undefined> => {
+    const res = await repository.update(id, updates, ['email', 'name', 'id']);
 
     if (!res) throw new HttpError(404, 'Person Not Found!');
 

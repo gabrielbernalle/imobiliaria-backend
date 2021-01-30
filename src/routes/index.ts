@@ -9,7 +9,7 @@ router.get('/', (req: Request, res: Response) => {
     res.send('Imobiliaria Service 0.01');
 });
 
-router.use('/api/person', personRoutes);
+router.use('/api/users', personRoutes);
 
 router.get('/api-docs', (req: Request, res: Response) => {
     res.send(swaggerSpec);

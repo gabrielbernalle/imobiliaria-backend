@@ -1,9 +1,10 @@
 import { Propertie } from '../../../database/entities/Propertie';
-import { PropertieInterface } from '../interfaces';
+import { CreatePropertieInterface } from '../interfaces';
 import * as repository from '../repository';
 
 export const create = async (
-    propertieBody: PropertieInterface,
+    ownerId: string,
+    propertieBody: CreatePropertieInterface,
 ): Promise<Propertie> => {
-    return repository.create(propertieBody);
+    return repository.create(ownerId, propertieBody);
 };

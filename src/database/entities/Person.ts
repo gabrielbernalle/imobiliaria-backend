@@ -6,7 +6,9 @@ import {
     Column,
     BeforeUpdate,
     BeforeInsert,
+    OneToMany,
 } from 'typeorm';
+import { Propertie } from './Propertie';
 
 @Entity('persons')
 export class Person {
@@ -21,6 +23,9 @@ export class Person {
 
     @Column({ nullable: false })
     password: string;
+
+    @OneToMany(() => Propertie, propertie => propertie.owner)
+    propertiesOwn: Propertie[];
 
     public async compareHash(hash: unknown): Promise<boolean> {
         return bcrypt.compare(hash, this.password);

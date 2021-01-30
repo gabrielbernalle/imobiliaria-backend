@@ -10,3 +10,17 @@ export interface QueryUserInterface {
     email?: string;
     name?: string;
 }
+
+export interface CreateUserInterface {
+    name: string;
+    email: string;
+    password?: string;
+}
+
+export interface UpdateUserInterface {
+    email?: string;
+    name?: string;
+    password?: string;
+}
+
+export type UserReturnColumns = 'name' | 'email' | 'id';
